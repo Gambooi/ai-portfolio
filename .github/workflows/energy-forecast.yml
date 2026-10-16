@@ -20,6 +20,8 @@ jobs:
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v5
+        with:
+          ref: main  # latest main, not the commit the run was queued on
 
       - uses: actions/setup-python@v6
         with:
@@ -50,15 +52,26 @@ jobs:
         working-directory: ml
         run: python forecast.py
 
+      # The JSON files are generated output: apply this run's files on top of the newest main,
+      # so pushes made while the job ran (code or another forecast) never cause merge conflicts.
       - name: Commit forecast
         run: |
           git config user.name "Gambooi"
           git config user.email "54905817+Gambooi@users.noreply.github.com"
-          git add public/data/energy_forecast.json public/data/energy_backtest.json
-          if git diff --cached --quiet; then
-            echo "No changes"
-          else
+          mkdir -p "$RUNNER_TEMP/out"
+          cp public/data/energy_forecast.json public/data/energy_backtest.json "$RUNNER_TEMP/out/"
+          for attempt in 1 2 3; do
+            git fetch origin main
+            git reset --hard origin/main
+            cp "$RUNNER_TEMP/out/"*.json public/data/
+            git add public/data/energy_forecast.json public/data/energy_backtest.json
+            if git diff --cached --quiet; then
+              echo "No changes"
+              exit 0
+            fi
             git commit -m "Update energy forecast $(date -u +%Y-%m-%d)"
-            git pull --rebase
-            git push
-          fi
+            if git push origin HEAD:main; then exit 0; fi
+            echo "Push rejected, retrying"
+            sleep 5
+          done
+          exit 1

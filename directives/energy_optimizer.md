@@ -43,6 +43,8 @@ Weather points: West Jutland, Baltic DK2 (offshore wind), Copenhagen, North Germ
 
 ## Edge cases and learnings
 
+- **Workflow commit conflicts:** a queued run checks out the commit it was triggered on, so a forecast commit (or a code push) landing meanwhile caused a merge conflict on `energy_forecast.json`. The workflow now checks out `main` and commits by resetting to the newest `origin/main` and copying its generated JSON on top (retries the push 3 times).
+- **Run times on Actions:** cache miss (full fetch) ≈ 27 min; with cache ≈ 5 min (fetch 13 s, train + backtest 4.5 min).
 - **Open-Meteo timeouts:** requesting 2.5 years × 21 variables per point in one call timed out (>120 s) on GitHub Actions. Weather is fetched in 182-day chunks, and `get_json` retries timeouts/connection errors with backoff. Even chunked, a full fetch on Actions hit 7 timeouts and took 34 min in total, which is why daily runs are incremental with a cache.
 - **Energinet rate limit:** a few requests in quick succession return HTTP 429 with "Try again in N seconds" (seen: 300 s). `get_json` parses N and waits. Use few, large requests (`limit=0` returns all rows in the range).
 - **Dataset switch on 2025-10-01:** prices move from hourly `Elspotprices` to 15-min `DayAheadPrices`. Verified continuous across the switch.
