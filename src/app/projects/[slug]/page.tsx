@@ -1,8 +1,31 @@
+import { readFileSync } from "node:fs";
+import path from "node:path";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getProject, projects } from "@/data/projects";
+import { profile } from "@/data/profile";
 import { StatusBadge } from "@/components/StatusBadge";
+import { EnergyOptimizer } from "@/components/energy/EnergyOptimizer";
+import { HowItsBuilt } from "@/components/energy/HowItsBuilt";
+import type { BacktestReport, ForecastData } from "@/lib/energy";
+
+function readJson<T>(file: string): T {
+  return JSON.parse(readFileSync(path.join(process.cwd(), "public", "data", file), "utf8")) as T;
+}
+
+function Demo({ slug }: { slug: string }) {
+  if (slug === "green-energy-optimizer") {
+    const report = readJson<BacktestReport>("energy_backtest.json");
+    return (
+      <>
+        <EnergyOptimizer data={readJson<ForecastData>("energy_forecast.json")} report={report} />
+        <HowItsBuilt github={profile.github + "/ai-portfolio"} coverage={report.price.coverage_p10_p90} />
+      </>
+    );
+  }
+  return null;
+}
 
 export function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }));
@@ -29,11 +52,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
       <h1 className="mt-3 text-4xl font-semibold tracking-tight">{project.title}</h1>
       <p className="mt-4 max-w-2xl text-lg text-muted">{project.description}</p>
 
-      <section className="mt-10 rounded-xl border border-dashed border-border bg-surface p-10 text-center text-muted">
-        {project.status === "live" ? "Demo loads here." : "The live demo is being built and will appear here."}
-      </section>
-
-      <div className="mt-10 grid gap-8 sm:grid-cols-2">
+      <div className="mt-8 grid gap-6 sm:grid-cols-2">
         <div>
           <h2 className="text-sm font-semibold uppercase tracking-wide text-muted">Skills shown</h2>
           <ul className="mt-3 flex flex-wrap gap-2">
@@ -51,6 +70,14 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           </ul>
         </div>
       </div>
+
+      {project.status === "planned" ? (
+        <section className="mt-10 rounded-xl border border-dashed border-border bg-surface p-10 text-center text-muted">
+          The live demo is being built and will appear here.
+        </section>
+      ) : (
+        <Demo slug={project.slug} />
+      )}
     </article>
   );
 }

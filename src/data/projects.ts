@@ -19,10 +19,10 @@ export const projects: Project[] = [
     title: "Green Energy Optimizer",
     tagline: "Forecasts Danish electricity prices and CO₂ to find the cheapest, greenest hours.",
     description:
-      "Pulls live spot prices and CO₂ intensity for DK1/DK2 from Energinet's Energi Data Service plus DMI weather data, forecasts the next 24–48 hours, and recommends when to charge an EV or run a heat pump. A dashboard compares forecasts against what actually happened.",
-    skills: ["Data engineering", "Time-series forecasting", "Scheduled pipelines", "Data visualization"],
-    stack: ["Python", "LightGBM", "GitHub Actions", "Next.js"],
-    status: "planned",
+      "Forecasts Danish electricity prices and CO₂ intensity 7 days ahead from Energinet data and weather forecasts, then plans the cheapest or greenest hours to charge a car or run a heat pump, using the price a Copenhagen household actually pays. Retrained and updated every day, with its accuracy tested on a year of unseen data.",
+    skills: ["Data engineering", "Time-series forecasting", "Uncertainty calibration", "Scheduled pipelines", "Data visualization"],
+    stack: ["Python", "pandas", "LightGBM", "Conformal prediction", "GitHub Actions", "Next.js", "Recharts"],
+    status: "live",
   },
   {
     slug: "invoice-extraction",

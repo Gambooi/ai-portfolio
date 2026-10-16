@@ -8,6 +8,12 @@
   --border: #e7e5e4;
   --accent: #0f766e;
   --accent-soft: #ccfbf1;
+  /* charts (validated: dataviz palette, slots blue + aqua) */
+  --series-price: #2a78d6;
+  --series-co2: #1baf7a;
+  --series-muted: #a8a29e;
+  --chart-grid: #e7e5e4;
+  --chart-axis: #78716c;
 }
 
 @theme inline {
@@ -18,6 +24,9 @@
   --color-border: var(--border);
   --color-accent: var(--accent);
   --color-accent-soft: var(--accent-soft);
+  --color-series-price: var(--series-price);
+  --color-series-co2: var(--series-co2);
+  --color-series-muted: var(--series-muted);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -31,6 +40,11 @@
     --border: #292524;
     --accent: #2dd4bf;
     --accent-soft: #134e4a;
+    --series-price: #3987e5;
+    --series-co2: #199e70;
+    --series-muted: #57534e;
+    --chart-grid: #292524;
+    --chart-axis: #a8a29e;
   }
 }
 

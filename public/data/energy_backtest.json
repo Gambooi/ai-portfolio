@@ -1,0 +1,252 @@
+{
+  "price": {
+    "target": "price",
+    "unit": "DKK/MWh",
+    "period": [
+      "2025-10-01",
+      "2026-09-30"
+    ],
+    "rows": 105096,
+    "mae_model": 202.1,
+    "mae_baseline": 302.5,
+    "skill": 0.332,
+    "coverage_p10_p90": 0.766,
+    "per_lead": [
+      {
+        "lead": 2,
+        "mae_model": 173.3,
+        "mae_baseline": 303.2,
+        "skill": 0.429,
+        "coverage_p10_p90": 0.762
+      },
+      {
+        "lead": 3,
+        "mae_model": 181.3,
+        "mae_baseline": 303.1,
+        "skill": 0.402,
+        "coverage_p10_p90": 0.766
+      },
+      {
+        "lead": 4,
+        "mae_model": 195.8,
+        "mae_baseline": 302.5,
+        "skill": 0.353,
+        "coverage_p10_p90": 0.771
+      },
+      {
+        "lead": 5,
+        "mae_model": 209.2,
+        "mae_baseline": 301.9,
+        "skill": 0.307,
+        "coverage_p10_p90": 0.766
+      },
+      {
+        "lead": 6,
+        "mae_model": 220.8,
+        "mae_baseline": 301.8,
+        "skill": 0.268,
+        "coverage_p10_p90": 0.768
+      },
+      {
+        "lead": 7,
+        "mae_model": 232.5,
+        "mae_baseline": 302.6,
+        "skill": 0.232,
+        "coverage_p10_p90": 0.762
+      }
+    ],
+    "per_month": [
+      {
+        "month": "2025-10",
+        "mae_model": 182.1,
+        "mae_baseline": 321.4
+      },
+      {
+        "month": "2025-11",
+        "mae_model": 168.4,
+        "mae_baseline": 327.4
+      },
+      {
+        "month": "2025-12",
+        "mae_model": 144.4,
+        "mae_baseline": 249.0
+      },
+      {
+        "month": "2026-01",
+        "mae_model": 179.1,
+        "mae_baseline": 214.0
+      },
+      {
+        "month": "2026-02",
+        "mae_model": 149.3,
+        "mae_baseline": 222.5
+      },
+      {
+        "month": "2026-03",
+        "mae_model": 213.8,
+        "mae_baseline": 390.2
+      },
+      {
+        "month": "2026-04",
+        "mae_model": 174.2,
+        "mae_baseline": 303.2
+      },
+      {
+        "month": "2026-05",
+        "mae_model": 200.2,
+        "mae_baseline": 225.7
+      },
+      {
+        "month": "2026-06",
+        "mae_model": 235.6,
+        "mae_baseline": 332.9
+      },
+      {
+        "month": "2026-07",
+        "mae_model": 182.1,
+        "mae_baseline": 278.8
+      },
+      {
+        "month": "2026-08",
+        "mae_model": 227.7,
+        "mae_baseline": 248.4
+      },
+      {
+        "month": "2026-09",
+        "mae_model": 368.3,
+        "mae_baseline": 518.2
+      }
+    ],
+    "charging": {
+      "captured_model": 0.888,
+      "captured_baseline": 0.801,
+      "hours": 4
+    }
+  },
+  "co2": {
+    "target": "co2",
+    "unit": "g/kWh",
+    "period": [
+      "2025-10-01",
+      "2026-09-30"
+    ],
+    "rows": 121632,
+    "mae_model": 29.3,
+    "mae_baseline": 44.8,
+    "skill": 0.345,
+    "coverage_p10_p90": 0.803,
+    "per_lead": [
+      {
+        "lead": 1,
+        "mae_model": 26.8,
+        "mae_baseline": 44.9,
+        "skill": 0.404,
+        "coverage_p10_p90": 0.8
+      },
+      {
+        "lead": 2,
+        "mae_model": 27.3,
+        "mae_baseline": 45.1,
+        "skill": 0.395,
+        "coverage_p10_p90": 0.799
+      },
+      {
+        "lead": 3,
+        "mae_model": 27.6,
+        "mae_baseline": 45.0,
+        "skill": 0.387,
+        "coverage_p10_p90": 0.798
+      },
+      {
+        "lead": 4,
+        "mae_model": 28.9,
+        "mae_baseline": 44.6,
+        "skill": 0.354,
+        "coverage_p10_p90": 0.805
+      },
+      {
+        "lead": 5,
+        "mae_model": 30.4,
+        "mae_baseline": 44.5,
+        "skill": 0.317,
+        "coverage_p10_p90": 0.806
+      },
+      {
+        "lead": 6,
+        "mae_model": 31.9,
+        "mae_baseline": 44.7,
+        "skill": 0.287,
+        "coverage_p10_p90": 0.802
+      },
+      {
+        "lead": 7,
+        "mae_model": 32.6,
+        "mae_baseline": 44.6,
+        "skill": 0.269,
+        "coverage_p10_p90": 0.809
+      }
+    ],
+    "per_month": [
+      {
+        "month": "2025-10",
+        "mae_model": 30.8,
+        "mae_baseline": 49.3
+      },
+      {
+        "month": "2025-11",
+        "mae_model": 24.6,
+        "mae_baseline": 44.2
+      },
+      {
+        "month": "2025-12",
+        "mae_model": 21.0,
+        "mae_baseline": 41.6
+      },
+      {
+        "month": "2026-01",
+        "mae_model": 19.3,
+        "mae_baseline": 29.2
+      },
+      {
+        "month": "2026-02",
+        "mae_model": 48.5,
+        "mae_baseline": 66.3
+      },
+      {
+        "month": "2026-03",
+        "mae_model": 25.8,
+        "mae_baseline": 40.5
+      },
+      {
+        "month": "2026-04",
+        "mae_model": 32.0,
+        "mae_baseline": 41.6
+      },
+      {
+        "month": "2026-05",
+        "mae_model": 31.8,
+        "mae_baseline": 43.3
+      },
+      {
+        "month": "2026-06",
+        "mae_model": 24.8,
+        "mae_baseline": 34.7
+      },
+      {
+        "month": "2026-07",
+        "mae_model": 29.6,
+        "mae_baseline": 45.8
+      },
+      {
+        "month": "2026-08",
+        "mae_model": 32.0,
+        "mae_baseline": 46.4
+      },
+      {
+        "month": "2026-09",
+        "mae_model": 33.4,
+        "mae_baseline": 56.3
+      }
+    ]
+  }
+}
