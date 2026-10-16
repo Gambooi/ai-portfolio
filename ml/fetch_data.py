@@ -43,9 +43,15 @@ LEAD_DAYS = range(1, 8)
 
 
 def get_json(url: str, params: dict, max_tries: int = 6) -> dict:
-    """GET with retries. Energinet answers 429 with 'Try again in N seconds'."""
+    """GET with retries. Energinet answers 429 with 'Try again in N seconds'; timeouts and 5xx back off."""
     for attempt in range(max_tries):
-        resp = requests.get(url, params=params, timeout=120)
+        try:
+            resp = requests.get(url, params=params, timeout=180)
+        except (requests.Timeout, requests.ConnectionError) as exc:
+            wait = 20 * (attempt + 1)
+            print(f"  {type(exc).__name__}, retrying in {wait}s")
+            time.sleep(wait)
+            continue
         if resp.status_code == 429:
             match = re.search(r"(\d+) seconds", resp.text)
             wait = int(match.group(1)) + 5 if match else 60 * (attempt + 1)
@@ -115,23 +121,30 @@ def fetch_weather(start: date, end: date) -> pd.DataFrame:
     frames = []
     for name, (lat, lon) in WEATHER_POINTS.items():
         print(f"  weather {name}")
-        data = get_json(
-            PREVIOUS_RUNS,
-            {
-                "latitude": lat,
-                "longitude": lon,
-                "start_date": start.isoformat(),
-                "end_date": (end - timedelta(days=1)).isoformat(),
-                "hourly": ",".join(hourly),
-                "timezone": "GMT",
-            },
-        )
-        df = pd.DataFrame(data["hourly"])
+        chunks = []
+        chunk_start = start
+        # Half-year chunks: one request for the full history can time out.
+        while chunk_start < end:
+            chunk_end = min(chunk_start + timedelta(days=182), end)
+            data = get_json(
+                PREVIOUS_RUNS,
+                {
+                    "latitude": lat,
+                    "longitude": lon,
+                    "start_date": chunk_start.isoformat(),
+                    "end_date": (chunk_end - timedelta(days=1)).isoformat(),
+                    "hourly": ",".join(hourly),
+                    "timezone": "GMT",
+                },
+            )
+            chunks.append(pd.DataFrame(data["hourly"]))
+            chunk_start = chunk_end
+            time.sleep(1)
+        df = pd.concat(chunks, ignore_index=True)
         df["time"] = pd.to_datetime(df["time"], utc=True)
         df = df.set_index("time")
         df.columns = [f"{name}_{c.replace('_previous_day', '_d')}" for c in df.columns]
         frames.append(df)
-        time.sleep(1)
     return pd.concat(frames, axis=1).reset_index()
 
 

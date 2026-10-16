@@ -42,6 +42,7 @@ Weather points: West Jutland, Baltic DK2 (offshore wind), Copenhagen, North Germ
 
 ## Edge cases and learnings
 
+- **Open-Meteo timeouts:** requesting 2.5 years × 21 variables per point in one call timed out (>120 s) on GitHub Actions. Weather is fetched in 182-day chunks, and `get_json` retries timeouts/connection errors with backoff.
 - **Energinet rate limit:** a few requests in quick succession return HTTP 429 with "Try again in N seconds" (seen: 300 s). `get_json` parses N and waits. Use few, large requests (`limit=0` returns all rows in the range).
 - **Dataset switch on 2025-10-01:** prices move from hourly `Elspotprices` to 15-min `DayAheadPrices`. Verified continuous across the switch.
 - **Time zones:** store everything in UTC. Energinet's `start`/`end` parameters are DK dates, so day counts look uneven at the window edges in UTC. This is expected.
