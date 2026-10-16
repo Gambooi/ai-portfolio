@@ -52,3 +52,32 @@ body {
   background: var(--background);
   color: var(--foreground);
 }
+
+/* ---- Motion (all short and functional; disabled for reduced motion below) ---- */
+:root {
+  --ease-out: cubic-bezier(0.2, 0, 0, 1);
+}
+
+.reveal { transition: opacity 300ms var(--ease-out), transform 300ms var(--ease-out); }
+.reveal.reveal-hidden { opacity: 0; transform: translateY(8px); transition: none; }
+
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+.fade-in { animation: fade-in 200ms var(--ease-out); }
+
+@keyframes pulse-ring {
+  0% { transform: scale(1); opacity: 0.55; }
+  70%, 100% { transform: scale(2.6); opacity: 0; }
+}
+.pulse-ring { transform-box: fill-box; transform-origin: center; animation: pulse-ring 2s var(--ease-out) infinite; }
+
+/* Plan highlight in the charts glides to its new hours */
+.plan-block rect, .plan-block path { transition: x 200ms var(--ease-out), width 200ms var(--ease-out), d 200ms var(--ease-out); }
+@keyframes plan-in { from { opacity: 0; } to { opacity: 1; } }
+.plan-block { animation: plan-in 200ms var(--ease-out); }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .reveal.reveal-hidden { opacity: 1; transform: none; transition: none; }
+  .fade-in, .plan-block, .pulse-ring { animation: none; }
+  .plan-block rect, .plan-block path { transition: none; }
+  * { scroll-behavior: auto !important; }
+}

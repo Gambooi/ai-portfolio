@@ -146,6 +146,37 @@ export function plan(points: HourPoint[], startT: number, endT: number, device: 
            usesForecast: hours.some((p) => p.isForecast) };
 }
 
+export function currentPoint(points: HourPoint[], now: number): HourPoint | null {
+  return points.find((p) => p.t <= now && now < p.t + HOUR) ?? null;
+}
+
+/** Cheapest run of `hours` consecutive hours (household price) from the current hour onwards. */
+export function cheapestWindow(points: HourPoint[], now: number, hours = 3): { start: number; end: number; avg: number; forecast: boolean } | null {
+  const ahead = points.filter((p) => p.t + HOUR > now && p.pay != null);
+  let best: { start: number; end: number; avg: number; forecast: boolean } | null = null;
+  for (let i = 0; i + hours <= ahead.length; i++) {
+    const run = ahead.slice(i, i + hours);
+    if (run[hours - 1].t - run[0].t !== (hours - 1) * HOUR) continue;
+    const avg = run.reduce((a, p) => a + p.pay!, 0) / hours;
+    if (!best || avg < best.avg) best = { start: run[0].t, end: run[hours - 1].t + HOUR, avg, forecast: run.some((p) => p.isForecast) };
+  }
+  return best;
+}
+
+/** Today's average household price (DK date of `p`). */
+export function dayAverage(points: HourPoint[], p: HourPoint): number | null {
+  const day = points.filter((x) => x.dkDate === p.dkDate && x.pay != null);
+  return day.length ? day.reduce((a, x) => a + x.pay!, 0) / day.length : null;
+}
+
+/** Where a CO2 value sits relative to the last 7 days of measurements. */
+export function co2Level(points: HourPoint[], value: number): "low" | "typical" | "high" {
+  const measured = points.filter((p) => p.co2Source === "actual" && p.co2 != null).map((p) => p.co2!).sort((a, b) => a - b);
+  if (measured.length < 10) return "typical";
+  const q = (f: number) => measured[Math.floor(f * (measured.length - 1))];
+  return value <= q(1 / 3) ? "low" : value >= q(2 / 3) ? "high" : "typical";
+}
+
 /** Merge consecutive hours into [start, end) blocks. */
 export function toBlocks(hours: HourPoint[]): [number, number][] {
   const blocks: [number, number][] = [];

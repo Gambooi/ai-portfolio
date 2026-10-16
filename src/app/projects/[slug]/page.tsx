@@ -8,6 +8,7 @@ import { profile } from "@/data/profile";
 import { StatusBadge } from "@/components/StatusBadge";
 import { EnergyOptimizer } from "@/components/energy/EnergyOptimizer";
 import { HowItsBuilt } from "@/components/energy/HowItsBuilt";
+import { Reveal } from "@/components/motion/Reveal";
 import type { BacktestReport, ForecastData } from "@/lib/energy";
 
 function readJson<T>(file: string): T {
@@ -20,7 +21,9 @@ function Demo({ slug }: { slug: string }) {
     return (
       <>
         <EnergyOptimizer data={readJson<ForecastData>("energy_forecast.json")} report={report} />
-        <HowItsBuilt github={profile.github + "/ai-portfolio"} coverage={report.price.coverage_p10_p90} />
+        <Reveal>
+          <HowItsBuilt github={profile.github + "/ai-portfolio"} coverage={report.price.coverage_p10_p90} />
+        </Reveal>
       </>
     );
   }
