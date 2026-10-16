@@ -9,6 +9,7 @@ Everything is stored hourly in UTC as Parquet files in ml/data/.
 Usage:
   python ml/fetch_data.py                      # full history from 2024-05-01 to today
   python ml/fetch_data.py --start 2026-09-01   # only a recent window
+  python ml/fetch_data.py --incremental        # refresh the last 14 days of existing files (full fetch if none)
 """
 
 from __future__ import annotations
@@ -148,27 +149,45 @@ def fetch_weather(start: date, end: date) -> pd.DataFrame:
     return pd.concat(frames, axis=1).reset_index()
 
 
+REFRESH_DAYS = 14  # incremental mode re-fetches this much, so late corrections are picked up
+
+
+def merge(path: Path, new: pd.DataFrame, keys: list[str]) -> pd.DataFrame:
+    """Combine an existing Parquet file with newly fetched rows; new rows win."""
+    if path.exists():
+        new = pd.concat([pd.read_parquet(path), new], ignore_index=True).drop_duplicates(keys, keep="last")
+    return new.sort_values(keys).reset_index(drop=True)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--start", type=date.fromisoformat, default=date(2024, 5, 1))
     parser.add_argument("--end", type=date.fromisoformat, default=date.today() + timedelta(days=2),
                         help="exclusive; default includes tomorrow's already published prices")
+    parser.add_argument("--incremental", action="store_true")
     args = parser.parse_args()
 
     DATA_DIR.mkdir(exist_ok=True)
-    print(f"Fetching {args.start} -> {args.end}")
+    files = {name: DATA_DIR / f"{name}.parquet" for name in ("prices", "co2", "weather")}
+    incremental = args.incremental and all(p.exists() for p in files.values())
+    if incremental:
+        last = min(pd.read_parquet(p, columns=["time"])["time"].max() for p in files.values())
+        args.start = max(args.start, last.date() - timedelta(days=REFRESH_DAYS))
+    print(f"Fetching {args.start} -> {args.end}" + (" (incremental)" if incremental else ""))
+
+    def save(name: str, df: pd.DataFrame, keys: list[str]) -> pd.DataFrame:
+        df = merge(files[name], df, keys) if incremental else df
+        df.to_parquet(files[name], index=False)
+        return df
 
     print("Prices")
-    prices = fetch_prices(args.start, args.end)
-    prices.to_parquet(DATA_DIR / "prices.parquet", index=False)
+    prices = save("prices", fetch_prices(args.start, args.end), ["time", "area"])
 
     print("CO2")
-    co2 = fetch_co2(args.start, min(args.end, date.today() + timedelta(days=1)))
-    co2.to_parquet(DATA_DIR / "co2.parquet", index=False)
+    co2 = save("co2", fetch_co2(args.start, min(args.end, date.today() + timedelta(days=1))), ["time", "area"])
 
     print("Weather")
-    weather = fetch_weather(args.start, min(args.end, date.today() + timedelta(days=1)))
-    weather.to_parquet(DATA_DIR / "weather.parquet", index=False)
+    weather = save("weather", fetch_weather(args.start, min(args.end, date.today() + timedelta(days=1))), ["time"])
 
     for label, df in [("prices", prices), ("co2", co2), ("weather", weather)]:
         print(f"{label:8s} {len(df):>7,} rows  {df['time'].min()} -> {df['time'].max()}  "

@@ -21,6 +21,7 @@ Weather points: West Jutland, Baltic DK2 (offshore wind), Copenhagen, North Germ
 1. **Fetch data:** `ml/.venv/Scripts/python.exe ml/fetch_data.py [--start YYYY-MM-DD] [--end YYYY-MM-DD]`
    - Default: 2024-05-01 to the day after tomorrow (exclusive). Writes `ml/data/prices.parquet`, `co2.parquet`, `weather.parquet`, all hourly in UTC.
    - A full history run takes several minutes because of rate limits.
+   - `--incremental` refreshes only the last 14 days and merges into the existing files (about 10 s). Falls back to a full fetch if any file is missing. The workflow uses this with `actions/cache` holding `ml/data/*.parquet` between runs.
 2. **Train and backtest:** `cd ml && ../ml/.venv/Scripts/python.exe train.py` (about 7 minutes locally)
    - Feature logic lives in `ml/features.py` and is shared with `forecast.py`. Change features there only.
    - Rolling-origin backtest: 12 monthly folds (+2 warm-up folds for calibration). Each fold trains only on targets before the fold starts.
@@ -42,7 +43,7 @@ Weather points: West Jutland, Baltic DK2 (offshore wind), Copenhagen, North Germ
 
 ## Edge cases and learnings
 
-- **Open-Meteo timeouts:** requesting 2.5 years × 21 variables per point in one call timed out (>120 s) on GitHub Actions. Weather is fetched in 182-day chunks, and `get_json` retries timeouts/connection errors with backoff.
+- **Open-Meteo timeouts:** requesting 2.5 years × 21 variables per point in one call timed out (>120 s) on GitHub Actions. Weather is fetched in 182-day chunks, and `get_json` retries timeouts/connection errors with backoff. Even chunked, a full fetch on Actions hit 7 timeouts and took 34 min in total, which is why daily runs are incremental with a cache.
 - **Energinet rate limit:** a few requests in quick succession return HTTP 429 with "Try again in N seconds" (seen: 300 s). `get_json` parses N and waits. Use few, large requests (`limit=0` returns all rows in the range).
 - **Dataset switch on 2025-10-01:** prices move from hourly `Elspotprices` to 15-min `DayAheadPrices`. Verified continuous across the switch.
 - **Time zones:** store everything in UTC. Energinet's `start`/`end` parameters are DK dates, so day counts look uneven at the window edges in UTC. This is expected.

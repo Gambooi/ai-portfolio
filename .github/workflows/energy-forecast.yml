@@ -30,8 +30,17 @@ jobs:
       - name: Install dependencies
         run: pip install -r ml/requirements.txt
 
+      # Keep downloaded history between runs so each day only refreshes the last 2 weeks.
+      # A cache miss (first run, or no run for 7 days) falls back to a full download.
+      - name: Restore data cache
+        uses: actions/cache@v5
+        with:
+          path: ml/data/*.parquet
+          key: energy-data-${{ github.run_id }}
+          restore-keys: energy-data-
+
       - name: Fetch data
-        run: python ml/fetch_data.py
+        run: python ml/fetch_data.py --incremental
 
       - name: Train and backtest
         working-directory: ml
