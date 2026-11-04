@@ -6,11 +6,11 @@
       "2025-11-01",
       "2026-10-31"
     ],
-    "rows": 104386,
-    "mae_model": 223.0,
-    "mae_baseline": 331.1,
-    "skill": 0.327,
-    "coverage_p10_p90": 0.76,
+    "rows": 104814,
+    "mae_model": 224.8,
+    "mae_baseline": 333.3,
+    "skill": 0.325,
+    "coverage_p10_p90": 0.759,
     "per_lead": [
       {
         "lead": 2,
@@ -21,37 +21,37 @@
       },
       {
         "lead": 3,
-        "mae_model": 200.5,
-        "mae_baseline": 330.4,
+        "mae_model": 201.9,
+        "mae_baseline": 332.8,
         "skill": 0.393,
-        "coverage_p10_p90": 0.76
+        "coverage_p10_p90": 0.759
       },
       {
         "lead": 4,
-        "mae_model": 215.0,
-        "mae_baseline": 330.9,
-        "skill": 0.35,
-        "coverage_p10_p90": 0.763
+        "mae_model": 217.4,
+        "mae_baseline": 333.4,
+        "skill": 0.348,
+        "coverage_p10_p90": 0.762
       },
       {
         "lead": 5,
-        "mae_model": 229.3,
-        "mae_baseline": 331.6,
-        "skill": 0.309,
-        "coverage_p10_p90": 0.763
+        "mae_model": 231.5,
+        "mae_baseline": 334.2,
+        "skill": 0.307,
+        "coverage_p10_p90": 0.764
       },
       {
         "lead": 6,
-        "mae_model": 246.3,
-        "mae_baseline": 331.9,
-        "skill": 0.258,
-        "coverage_p10_p90": 0.754
+        "mae_model": 248.7,
+        "mae_baseline": 334.5,
+        "skill": 0.256,
+        "coverage_p10_p90": 0.755
       },
       {
         "lead": 7,
-        "mae_model": 257.0,
-        "mae_baseline": 332.2,
-        "skill": 0.226,
+        "mae_model": 259.4,
+        "mae_baseline": 334.8,
+        "skill": 0.225,
         "coverage_p10_p90": 0.753
       }
     ],
@@ -113,8 +113,8 @@
       },
       {
         "month": "2026-10",
-        "mae_model": 444.9,
-        "mae_baseline": 686.4
+        "mae_model": 456.2,
+        "mae_baseline": 694.7
       }
     ],
     "charging": {
@@ -130,10 +130,10 @@
       "2025-11-01",
       "2026-10-31"
     ],
-    "rows": 120900,
+    "rows": 121320,
     "mae_model": 29.2,
-    "mae_baseline": 44.5,
-    "skill": 0.345,
+    "mae_baseline": 44.7,
+    "skill": 0.346,
     "coverage_p10_p90": 0.812,
     "per_lead": [
       {
@@ -153,37 +153,37 @@
       {
         "lead": 3,
         "mae_model": 27.4,
-        "mae_baseline": 44.7,
-        "skill": 0.387,
-        "coverage_p10_p90": 0.808
+        "mae_baseline": 44.8,
+        "skill": 0.388,
+        "coverage_p10_p90": 0.807
       },
       {
         "lead": 4,
-        "mae_model": 28.8,
-        "mae_baseline": 44.5,
-        "skill": 0.352,
+        "mae_model": 28.9,
+        "mae_baseline": 44.7,
+        "skill": 0.353,
         "coverage_p10_p90": 0.81
       },
       {
         "lead": 5,
         "mae_model": 30.4,
-        "mae_baseline": 44.4,
-        "skill": 0.315,
+        "mae_baseline": 44.6,
+        "skill": 0.317,
         "coverage_p10_p90": 0.816
       },
       {
         "lead": 6,
         "mae_model": 31.9,
-        "mae_baseline": 44.5,
-        "skill": 0.284,
+        "mae_baseline": 44.7,
+        "skill": 0.286,
         "coverage_p10_p90": 0.81
       },
       {
         "lead": 7,
-        "mae_model": 32.6,
-        "mae_baseline": 44.3,
-        "skill": 0.264,
-        "coverage_p10_p90": 0.815
+        "mae_model": 32.7,
+        "mae_baseline": 44.6,
+        "skill": 0.267,
+        "coverage_p10_p90": 0.814
       }
     ],
     "per_month": [
@@ -244,8 +244,8 @@
       },
       {
         "month": "2026-10",
-        "mae_model": 29.0,
-        "mae_baseline": 46.7
+        "mae_model": 29.6,
+        "mae_baseline": 48.2
       }
     ]
   }
