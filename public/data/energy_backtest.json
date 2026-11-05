@@ -6,10 +6,10 @@
       "2025-11-01",
       "2026-10-31"
     ],
-    "rows": 104814,
-    "mae_model": 224.8,
-    "mae_baseline": 333.3,
-    "skill": 0.325,
+    "rows": 104956,
+    "mae_model": 225.5,
+    "mae_baseline": 333.2,
+    "skill": 0.323,
     "coverage_p10_p90": 0.759,
     "per_lead": [
       {
@@ -35,24 +35,24 @@
       },
       {
         "lead": 5,
-        "mae_model": 231.5,
-        "mae_baseline": 334.2,
-        "skill": 0.307,
+        "mae_model": 232.9,
+        "mae_baseline": 334.1,
+        "skill": 0.303,
         "coverage_p10_p90": 0.764
       },
       {
         "lead": 6,
-        "mae_model": 248.7,
-        "mae_baseline": 334.5,
-        "skill": 0.256,
-        "coverage_p10_p90": 0.755
+        "mae_model": 250.6,
+        "mae_baseline": 334.3,
+        "skill": 0.251,
+        "coverage_p10_p90": 0.754
       },
       {
         "lead": 7,
-        "mae_model": 259.4,
-        "mae_baseline": 334.8,
-        "skill": 0.225,
-        "coverage_p10_p90": 0.753
+        "mae_model": 260.0,
+        "mae_baseline": 334.7,
+        "skill": 0.223,
+        "coverage_p10_p90": 0.754
       }
     ],
     "per_month": [
@@ -113,8 +113,8 @@
       },
       {
         "month": "2026-10",
-        "mae_model": 456.2,
-        "mae_baseline": 694.7
+        "mae_model": 460.6,
+        "mae_baseline": 688.1
       }
     ],
     "charging": {
@@ -130,10 +130,10 @@
       "2025-11-01",
       "2026-10-31"
     ],
-    "rows": 121320,
-    "mae_model": 29.2,
+    "rows": 121476,
+    "mae_model": 29.3,
     "mae_baseline": 44.7,
-    "skill": 0.346,
+    "skill": 0.345,
     "coverage_p10_p90": 0.812,
     "per_lead": [
       {
@@ -166,23 +166,23 @@
       },
       {
         "lead": 5,
-        "mae_model": 30.4,
+        "mae_model": 30.5,
         "mae_baseline": 44.6,
         "skill": 0.317,
-        "coverage_p10_p90": 0.816
+        "coverage_p10_p90": 0.815
       },
       {
         "lead": 6,
-        "mae_model": 31.9,
-        "mae_baseline": 44.7,
-        "skill": 0.286,
-        "coverage_p10_p90": 0.81
+        "mae_model": 32.0,
+        "mae_baseline": 44.8,
+        "skill": 0.285,
+        "coverage_p10_p90": 0.809
       },
       {
         "lead": 7,
         "mae_model": 32.7,
-        "mae_baseline": 44.6,
-        "skill": 0.267,
+        "mae_baseline": 44.7,
+        "skill": 0.268,
         "coverage_p10_p90": 0.814
       }
     ],
@@ -244,8 +244,8 @@
       },
       {
         "month": "2026-10",
-        "mae_model": 29.6,
-        "mae_baseline": 48.2
+        "mae_model": 29.9,
+        "mae_baseline": 48.4
       }
     ]
   }
