@@ -6,10 +6,10 @@
       "2025-11-01",
       "2026-10-31"
     ],
-    "rows": 104956,
-    "mae_model": 225.5,
-    "mae_baseline": 333.2,
-    "skill": 0.323,
+    "rows": 105050,
+    "mae_model": 226.0,
+    "mae_baseline": 333.0,
+    "skill": 0.321,
     "coverage_p10_p90": 0.759,
     "per_lead": [
       {
@@ -42,16 +42,16 @@
       },
       {
         "lead": 6,
-        "mae_model": 250.6,
-        "mae_baseline": 334.3,
-        "skill": 0.251,
+        "mae_model": 252.1,
+        "mae_baseline": 333.9,
+        "skill": 0.245,
         "coverage_p10_p90": 0.754
       },
       {
         "lead": 7,
-        "mae_model": 260.0,
-        "mae_baseline": 334.7,
-        "skill": 0.223,
+        "mae_model": 261.4,
+        "mae_baseline": 334.2,
+        "skill": 0.218,
         "coverage_p10_p90": 0.754
       }
     ],
@@ -113,12 +113,12 @@
       },
       {
         "month": "2026-10",
-        "mae_model": 460.6,
-        "mae_baseline": 688.1
+        "mae_model": 464.2,
+        "mae_baseline": 682.4
       }
     ],
     "charging": {
-      "captured_model": 0.891,
+      "captured_model": 0.89,
       "captured_baseline": 0.804,
       "hours": 4
     }
@@ -130,11 +130,11 @@
       "2025-11-01",
       "2026-10-31"
     ],
-    "rows": 121476,
+    "rows": 121572,
     "mae_model": 29.3,
     "mae_baseline": 44.7,
     "skill": 0.345,
-    "coverage_p10_p90": 0.812,
+    "coverage_p10_p90": 0.811,
     "per_lead": [
       {
         "lead": 1,
@@ -174,8 +174,8 @@
       {
         "lead": 6,
         "mae_model": 32.0,
-        "mae_baseline": 44.8,
-        "skill": 0.285,
+        "mae_baseline": 44.7,
+        "skill": 0.284,
         "coverage_p10_p90": 0.809
       },
       {
@@ -183,7 +183,7 @@
         "mae_model": 32.7,
         "mae_baseline": 44.7,
         "skill": 0.268,
-        "coverage_p10_p90": 0.814
+        "coverage_p10_p90": 0.813
       }
     ],
     "per_month": [
@@ -244,7 +244,7 @@
       },
       {
         "month": "2026-10",
-        "mae_model": 29.9,
+        "mae_model": 30.0,
         "mae_baseline": 48.4
       }
     ]
